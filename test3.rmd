@@ -1,0 +1,19 @@
+```{r setup, include=FALSE}
+library(rvest)
+library(stringr)
+library(httr)
+url = 'https://www.clien.net/service/board/park?&od=T31&category=0&po='
+
+urls <- NULL
+for(x in 0:9){
+  urls <- c(urls, paste(url,x*10+1,sep= ''))
+}
+urls
+
+html <- read_html(urls[1])
+html
+
+htmlnode=html_nodes(html,'.subject_fixed')
+htmlnode
+html_attr(htmlnode, 'href')
+```
