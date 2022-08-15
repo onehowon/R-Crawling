@@ -1,0 +1,25 @@
+```{r setup, include=FALSE}
+library(rvest) # 필요한 패키지 두개
+library(httr)
+
+# GET함수로 서버에 정보 요청
+result = data.frame()
+
+# 1~40 페이지까지 클래스는 앞에. 제목과 닉네임만 read_html 함수로 html 코드 읽기
+# 태그를 이용해 추출 후 데이터프레임화
+for(i in 1:40){
+  url =paste0('https://www.clien.net/service/board/park?&od=T31&category=0&po=',i)
+  get_url = GET(url)
+  my_html = read_html(get_url)
+  title = my_html %>% html_nodes('.subject_fixed') %>% html_text(trim=TRUE)
+  nickname = my_html %>% html_nodes('.nickname') %>% html_text(trim=TRUE)
+  
+  result = rbind(result, data.frame(title, nickname))
+}
+
+View(result)
+
+write.csv(result, file="result.csv")
+# xlsx로 바꾸면 됨
+```{r}
+
