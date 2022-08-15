@@ -1,0 +1,20 @@
+```{r setup, include=FALSE}
+library(rvest)
+library(stringr)
+library(httr)
+
+url = 'https://www.acmicpc.net/board/list/all/1'
+data = GET(url)
+
+data
+
+my_html=read_html(data,encoding='UTF-8')
+my_html
+
+pick1=html_nodes(my_html,'.table-responsive td a')
+pick1
+
+result = html_text(pick1)
+result
+```{r}
+</a></td>
