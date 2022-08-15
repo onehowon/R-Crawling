@@ -1,0 +1,48 @@
+```{r setup, include=FALSE}
+library(rvest)
+library(stringr)
+library(httr)
+
+url = 'https://www.clien.net/service/board/park?&od=T31&category=0&po='
+data = GET(url)
+
+data
+
+my_html=read_html(data,encoding='UTF-8')
+my_html
+
+pick1=html_nodes(my_html,'.subject_fixed')
+pick1
+
+result = html_text(pick1)
+result
+
+pick2=html_nodes(my_html,'.nickname')
+pick2
+
+result = html_text(pick1)
+result
+
+result1 = html_text(pick2)
+result1
+
+result <- gsub('\n|\t','',result)
+result
+
+result1 <- gsub('\n|\t','',result1)
+result1
+
+urls <- NULL
+for(x in 0:9){
+  urls <- c(urls, paste(url,x*10+1,sep= ''))
+}
+urls
+
+result_df <- as.data.frame(result)
+result1_df <- as.data.frame(result1)
+
+outcome <- cbind(result_df, result1_df)
+outcome
+View(outcome)
+```{r}
+
